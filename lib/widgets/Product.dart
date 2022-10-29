@@ -3,77 +3,93 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intern1/Models/Productmodel.dart';
+import 'package:intern1/screens/Prodcut_details.dart';
+
 class Product extends StatelessWidget {
   final ProductsModel product;
   Product(this.product);
-  
-  ShapeBorder? get b => null;
-  ShapeBorder? get a => null;
+
+  ShapeBorder? get b => RoundedRectangleBorder(
+      borderRadius: BorderRadiusDirectional.circular(10.r));
+  ShapeBorder? get a => RoundedRectangleBorder(
+      borderRadius: BorderRadiusDirectional.circular(10.r));
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation :4,
-      surfaceTintColor: Color.fromARGB(255, 70, 170, 251),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            Stack(
+    return Container(
+      height: 200.h,
+      child: GestureDetector(
+        onTap: (() {
+          Get.to(() => Productdetails(product));
+        }),
+        child: Card(
+          elevation: 4,
+          shape: ShapeBorder.lerp(a, b, 0),
+          surfaceTintColor: Color.fromARGB(255, 70, 170, 251),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
               children: [
-                Container(
-                  height: 70.h,
-                  width: double.infinity,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: product.image!,
-                    width: 30.w,
-                    height: 30.h,
-                  ),
-                ),
-                // Positioned(child: Obx(()=>CircleAvatar(backgroundColor: Colors.white, child: IconButton(icon: product.,),)))
-              ],
-            ),
-             SizedBox(height: 4.0.h,),
-            Text(
-              product.title!,
-              maxLines: 1,
-              style: TextStyle(
-                  fontFamily: 'avenir', 
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w600),
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(height: 4.h),
-            if (product.rating != null)
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                padding:  EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                Stack(
                   children: [
-                    Text(
-                      product.rating!.rate.toString(),
-                      style: const TextStyle(color: Colors.white),
+                    Container(
+                      height: 70.h,
+                      width: double.infinity,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: product.image!,
+                        width: 30.w,
+                        height: 30.h,
+                      ),
                     ),
-                     Icon(
-                      Icons.star,
-                      size: 10,
-                      color: Colors.white,
-                    ),
+                    // Positioned(child: Obx(()=>CircleAvatar(backgroundColor: Colors.white, child: IconButton(icon: product.,),)))
                   ],
                 ),
-              ),
-             SizedBox(height: 15.h),
-            Text('\$${product.price}',
-                style: TextStyle(fontSize: 16.sp, fontFamily: 'avenir')),
-          ],
+                SizedBox(
+                  height: 4.0.h,
+                ),
+                Text(
+                  product.title!,
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontFamily: 'avenir',
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w600),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 4.h),
+                if (product.rating != null)
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          product.rating!.rate.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: 10,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                SizedBox(height: 15.h),
+                Text('\$${product.price}',
+                    style: TextStyle(fontSize: 16.sp, fontFamily: 'avenir')),
+              ],
+            ),
+          ),
         ),
       ),
     );

@@ -4,7 +4,6 @@ import 'package:intern1/services/Networkhandler.dart';
 class ProductController extends GetxController {
   var isLoading = true.obs;
   var productList = [].obs;
-  
 
   @override
   void onInit() {
@@ -18,6 +17,7 @@ class ProductController extends GetxController {
       var products = await HttpService.fetchProducts();
       if (products != null) {
         productList.value = products;
+        print(productList.value);
       }
     } finally {
       isLoading(false);

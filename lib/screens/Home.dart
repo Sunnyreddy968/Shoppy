@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intern1/screens/Notifications.dart';
 import 'package:intern1/screens/orders.dart';
+import 'package:intern1/screens/search.dart';
 import 'package:intern1/widgets/Product.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -15,15 +17,27 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        leading: const Icon(Icons.arrow_back_ios),
+        
+        automaticallyImplyLeading: false,
+        title: Text(
+          "Shoppy",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 30.sp,
+            color: Colors.white,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
+              Get.to(() => Search());
             },
             icon: const Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => Notifi());
+            },
             icon: const Icon(Icons.notification_add),
           ),
           IconButton(
@@ -36,22 +50,6 @@ class Home extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                const Expanded(
-                  child: Center(
-                    child: Text(
-                      "Shoppy",
-                      style:
-                          TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           Expanded(
             child: Obx(
               () {
