@@ -17,7 +17,7 @@ final ProductController productController = Get.put(ProductController());
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 1,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
