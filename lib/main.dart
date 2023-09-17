@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'firebase_options.dart';
 import 'package:intern1/screens/Home.dart';
 import 'package:intern1/screens/Login.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,14 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    // Replace with actual values
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyCmBl89flTskbov3ZBiEClz7p2UOdUmRiI",
-      appId: "1:503083209812:android:cbd4b338cedbfad02dc9c1",
-      messagingSenderId: "503083209812",
-      projectId: "intern-48fc8",
-    ),
+   await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MyApp());
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _LoginState extends State<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
+  
   }
 
   @override
@@ -42,8 +44,10 @@ class _LoginState extends State<Login> {
             ),
             Align(
               alignment: Alignment.topRight,
-              child: Image.asset('assests/Intersect 2.png',
-              color: Color.fromARGB(255, 89, 179, 252),),
+              child: Image.asset(
+                'assests/Intersect 2.png',
+                color: Color.fromARGB(255, 89, 179, 252),
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 165.h, left: 33.w, right: 16.w),
@@ -121,11 +125,14 @@ class _LoginState extends State<Login> {
                     ),
                     SizedBox(height: 5.h),
                     ElevatedButton(
-                      onPressed: signin,
+                      onPressed: () {
+                        signin();
+                        print("successfull");
+                      },
                       child: Center(
                         child: Text(
                           "Sign In",
-                          style: TextStyle(
+                          style:TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 16.sp,
                             color: Colors.white,
@@ -133,7 +140,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 74, 170, 249),
+                        primary:const  Color.fromARGB(255, 74, 170, 249),
                         minimumSize: Size(double.infinity, 39.h),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -164,7 +171,7 @@ class _LoginState extends State<Login> {
                             ],
                           ),
                           style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(63, 81, 181, 1),
+                            primary:const  Color.fromRGBO(63, 81, 181, 1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.r),
                             ),
@@ -239,10 +246,37 @@ class _LoginState extends State<Login> {
     ));
   }
 
-  Future signin() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: password.text.trim(),
-    );
+  Future<dynamic> signin() async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: emailController.text.trim(), password: password.text.trim());
+      print(userCredential);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
+
+  // sendotp() async {
+    
+  //   String id = "";
+  //   await FirebaseAuth.instance.verifyPhoneNumber(
+  //       phoneNumber: '+917095524856',
+  //       verificationCompleted: (PhoneAuthCredential credential) {},
+  //       verificationFailed: (FirebaseAuthException e) {
+  //         print(e.toString());
+  //       },
+  //       codeSent: (String verificationId, int? resendToken) {
+  //         id = verificationId;
+  //         print("gotitman");
+  //         print(id);
+  //       },
+  //       codeAutoRetrievalTimeout: (String verificationId) {});
+  // }
 }
